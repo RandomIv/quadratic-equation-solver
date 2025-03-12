@@ -24,13 +24,16 @@ async function getFloat(prompt: string): Promise<number> {
 }
 
 export const startInteractiveMode = async () => {
-  const a = await getFloat('a = ');
-  const b = await getFloat('b = ');
-  const c = await getFloat('c = ');
+  try {
+    const a = await getFloat('a = ');
+    const b = await getFloat('b = ');
+    const c = await getFloat('c = ');
 
-  const result = solveQuadratic(a, b, c);
-
-  rl.close();
-
-  logQuadraticEquation(a, b, c, result);
+    const result = solveQuadratic(a, b, c);
+    logQuadraticEquation(a, b, c, result);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    rl.close();
+  }
 };
