@@ -11,8 +11,7 @@ export const startNoninteractiveMode = (filePath: string) => {
 
     const content = fs.readFileSync(filePath, 'utf-8').trim();
     const parts = content.split(' ');
-
-    if (parts.length !== 3 || !parts.every((p) => !isNaN(parseFloat(p)))) {
+    if (parts.length !== 3 || !parts.every((p) => /^-?\d+(\.\d+)?$/.test(p))) {
       console.log('invalid file format');
       process.exit(1);
     }

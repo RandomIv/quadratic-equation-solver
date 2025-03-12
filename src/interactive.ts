@@ -13,8 +13,7 @@ const readNumber = promisify(rl.question).bind(rl);
 async function getFloat(prompt: string): Promise<number> {
   while (true) {
     const input = String(await readNumber(prompt));
-    const number = parseFloat(input);
-
+    const number = !/^-?\d+(\.\d+)?$/.test(input) ? NaN : parseFloat(input);
     if (!isNaN(number)) {
       return number;
     }
