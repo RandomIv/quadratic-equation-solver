@@ -1,6 +1,7 @@
 import * as readline from 'readline';
 import { promisify } from 'node:util';
 import { solveQuadratic } from './quadraticEquationSolver';
+import { logQuadraticEquation } from './logger';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -9,15 +10,13 @@ const rl = readline.createInterface({
 
 const readNumber = promisify(rl.question).bind(rl);
 
-async function getFloat(prompt: string): Promise<string> {
+async function getFloat(prompt: string): Promise<number> {
   while (true) {
     const input = String(await readNumber(prompt));
     const number = parseFloat(input);
 
     if (!isNaN(number)) {
-      return number.toString().includes('.')
-        ? number.toString()
-        : `${number}.0`;
+      return number;
     }
 
     console.log(`Error. Expected a valid real number, got "${input}" instead`);
@@ -25,17 +24,13 @@ async function getFloat(prompt: string): Promise<string> {
 }
 
 export const startInteractiveMode = async () => {
-  const a = String(await getFloat('a = '));
-  const b = String(await getFloat('b = '));
-  const c = String(await getFloat('c = '));
+  const a = await getFloat('a = ');
+  const b = await getFloat('b = ');
+  const c = await getFloat('c = ');
 
-  const result = solveQuadratic(Number(a), Number(b), Number(c));
+  const result = solveQuadratic(a, b, c);
 
   rl.close();
 
-  console.log(`
-  Equation is: (${a}) x^2 + (${b}) x + (${c}) = 0
-  There are ${result.length} roots
-  ${result.map((value, index) => `x${index + 1} = ${value}`).join('\n')}
-  `);
+  logQuadraticEquation(a, b, c, result);
 };

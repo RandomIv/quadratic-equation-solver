@@ -1,6 +1,6 @@
 import { solveQuadratic } from './quadraticEquationSolver';
 import * as fs from 'node:fs';
-
+import { logQuadraticEquation } from './logger';
 export const startNoninteractiveMode = (filePath: string) => {
   if (!fs.existsSync(filePath)) {
     console.log(`file ${filePath} does not exist`);
@@ -16,6 +16,9 @@ export const startNoninteractiveMode = (filePath: string) => {
   }
 
   const [a, b, c] = parts.map(parseFloat);
-  console.log(solveQuadratic(a, b, c));
+  const result = solveQuadratic(a, b, c);
+
+  logQuadraticEquation(a, b, c, result);
+
   process.exit(1);
 };
