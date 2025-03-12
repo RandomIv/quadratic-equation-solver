@@ -23,6 +23,7 @@ async function getFloat(prompt: string): Promise<string> {
     console.log(`Error. Expected a valid real number, got "${input}" instead`);
   }
 }
+
 export const startInteractiveMode = async () => {
   const a = String(await getFloat('a = '));
   const b = String(await getFloat('b = '));

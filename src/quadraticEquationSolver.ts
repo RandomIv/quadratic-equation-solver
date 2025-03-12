@@ -1,4 +1,9 @@
 export const solveQuadratic = (a: number, b: number, c: number): number[] => {
+  if (a === 0) {
+    console.log('Error. a cannot be 0');
+    process.exit(1);
+  }
+
   const D = b * b - 4 * a * c;
 
   if (D < 0) return [];

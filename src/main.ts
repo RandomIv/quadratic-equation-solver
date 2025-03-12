@@ -1,5 +1,5 @@
 import { startInteractiveMode } from './interactive';
+import { startNoninteractiveMode } from './noninteractive';
 
 const filePath: string = process.argv[2];
-
-if (!filePath) await startInteractiveMode();
+filePath ? startNoninteractiveMode(filePath) : await startInteractiveMode();
